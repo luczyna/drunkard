@@ -13,7 +13,8 @@
 
             //views
             'drunkard.test',
-            'drunkard.settings'
+            'drunkard.settings',
+            'drunkard.navigation'
         ])
         .config(myAppConfig)
         .run(run)

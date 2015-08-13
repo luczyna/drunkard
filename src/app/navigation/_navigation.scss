@@ -1,0 +1,31 @@
+.nav-container {
+    padding-top: 5px;
+    position: relative;
+
+    h1 {
+        margin: 0;
+        font-size: 0.9em;
+        text-align: center;
+    }
+
+    .nav-link {
+        position: absolute;
+        top: 0.4em;
+        font-size: 0.8em;
+
+        // if the link is for the current view
+        // we don't show it;
+        &.current {
+            display: none;
+        }
+    }
+
+    .sit-left {
+        left: 15px;
+    }
+
+    .sit-right {
+        right: 15px;
+    }
+
+}
