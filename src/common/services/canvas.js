@@ -3,7 +3,7 @@
 
     angular
         .module('drunkard.canvasService', [])
-        .factory('canvasing', canvasService);
+        .service('canvasing', canvasService);
 
     //////
     //////
