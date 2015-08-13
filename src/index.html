@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="" ng-app="drunkard" ng-controller="AppCtrl">
+<html class="theme-default" ng-app="drunkard" ng-controller="AppCtrl">
     <head>
         <meta charset="utf-8">
         <title ng-bind="pageTitle"></title>
@@ -17,6 +17,12 @@
         <script type="text/javascript" src="<%= file %>"></script><% }); %>
     </head>
     <body class="theme-default">
-        <div ui-view="main"></div>
+        <nav class="nav-container">
+            <h1>Drunkard Test</h1>
+            <a ui-sref="settings" class="sit-right">settings</a>
+            <a ui-sref="test" class="sit-left"><span class="icon icon-navigate-before"></span> back to test</a>
+        </nav>
+
+        <div class="main-container" ui-view="main"></div>
     </body>
 </html>

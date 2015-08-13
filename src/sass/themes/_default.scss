@@ -1,11 +1,38 @@
-body.theme-default, 
-body.theme-darkBlue {
+$default:   rgb(6, 21, 43);
+$opposite:  rgb(255, 54, 25);
+$tertiary:  rgb(0, 100, 255);
+$splash:    rgb(158, 204, 20);
 
-    $default:   rgb(6, 21, 43);
-    $opposite:  rgb(255, 54, 25);
-    $tertiary:  rgb(0, 100, 255);
-    $splash:    rgb(158, 204, 20);
-
+html.theme-default, 
+html.theme-darkBlue {
     background: $default;
-    color: $white-1;
+    color: $white-5;
+}
+
+body.theme-default, 
+body.theme-darkBlue {}
+
+
+
+
+input:focus,
+input[type="checkbox"]:focus {
+    outline: 2px $tertiary solid;
+}
+
+a {
+    color: $white-3;
+    border-bottom: 0 $tertiary solid;
+    @include transition(color 0.2s ease-in-out, border-width 0.2s ease-in);
+
+    &:hover,
+    &:focus {
+        color: $tertiary;
+    }
+
+    &:focus {
+        outline: 0;
+        border-width: 2px;
+        text-decoration: none;
+    }
 }

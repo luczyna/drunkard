@@ -1,0 +1,30 @@
+.drunk-settings,
+.drunk-about,
+.drunk-contact {
+    margin: 0 auto 2em;
+
+    h2 {
+        // text-align: center;
+        text-transform: uppercase;
+        font-size: 1.1em;
+        margin: 0 auto 1em;
+    }
+
+    label {
+        display: block;
+        margin: 0 auto 1em;
+    }
+
+    p {
+        line-height: 1.5;
+        text-align: justify;
+    }
+}
+
+.drunk-settings {}
+
+
+.drunk-about {}
+
+
+.drunk-contact {}

@@ -2,8 +2,6 @@
 html, body {
     margin: 0;
     padding: 0;
-    color: $black;
-    background: $white-1;
     position: relative;
     font-weight: 300;
     font-family: 'Exo 2', sans-serif;
@@ -13,6 +11,12 @@ html {
 }
 *, *:before, *:after {
     box-sizing: inherit;
+}
+.nav-container,
+.main-container {
+    max-width: 40em;
+    margin: 0 auto;
+    padding: 15px;
 }
 
 
