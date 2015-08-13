@@ -23,7 +23,7 @@
 
     /* @ngInject */
     function myAppConfig($stateProvider, $urlRouterProvider, $locationProvider) {
-        $urlRouterProvider.otherwise('test');
+        $urlRouterProvider.otherwise('/');
         // $locationProvider.hashPrefix('');
         // $locationProvider.html5Mode(false);
     }
