@@ -1,0 +1,10 @@
+body.theme-sunshine {
+
+    $default:   rgb(240, 101, 35);
+    $opposite:  rgb(20, 21, 43);
+    $tertiary:  rgb(0, 9, 255);
+    $splash:    rgb(72, 204, 20);
+
+    background: $default;
+    color: $grey-1;
+}

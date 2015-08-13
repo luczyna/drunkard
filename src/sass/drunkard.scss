@@ -1,0 +1,9 @@
+// Main Sass File, for importing
+@import "variables";
+@import "mixins";
+@import "icons";
+@import "main-styles";
+@import "themes/themes";
+
+@import "../app/test/test";
+@import "../app/settings/settings";

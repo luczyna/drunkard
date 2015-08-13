@@ -1,0 +1,21 @@
+// COLOURS
+$main:          tomato;
+$alternate:     lime;
+$main-light:    lighten($main, 10%);
+$main-dark:     darken($main, 20%);
+$alt-light:     lighten($alternate, 25%);
+$alt-dark:      darken($alternate, 20%);
+
+$black:         #2a2a2a;
+$grey-1:        lighten($black, 5%);
+$grey-2:        lighten($black, 10%);
+$grey-3:        lighten($black, 15%);
+$grey-4:        lighten($black, 20%);
+$grey-5:        lighten($black, 25%);
+
+$white:         white;
+$white-1:       darken($white, 5%);
+$white-2:       darken($white, 10%);
+$white-3:       darken($white, 15%);
+$white-4:       darken($white, 20%);
+$white-5:       darken($white, 25%);

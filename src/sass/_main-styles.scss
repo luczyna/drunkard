@@ -1,0 +1,24 @@
+/* D R U N K A R D */
+html, body {
+    margin: 0;
+    padding: 0;
+    color: $black;
+    background: $white-1;
+    position: relative;
+    font-weight: 300;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+
+
+
+
+.clearfix:before,
+.clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }

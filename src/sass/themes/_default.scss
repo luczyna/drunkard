@@ -1,0 +1,11 @@
+body.theme-default, 
+body.theme-darkBlue {
+
+    $default:   rgb(6, 21, 43);
+    $opposite:  rgb(255, 54, 25);
+    $tertiary:  rgb(0, 100, 255);
+    $splash:    rgb(158, 204, 20);
+
+    background: $default;
+    color: $white-1;
+}
