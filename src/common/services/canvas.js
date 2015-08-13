@@ -14,8 +14,10 @@
         var canvas, canvasElement;
 
         var things = {
-
+            createBlip: createBlip
         };
+
+
 
         function setupCanvas() {
             // can we play this game?
@@ -30,8 +32,36 @@
                 // initialise our canvas element
                 canvasElement = document.getElementById('drunk-canvas');
                 canvas = canvasElement.getContext('2d');
+
+                self.setHeight();
+                window.addEventListener('resize', self.setHeight, false);
+
+                canvasElement.addEventListener('click', self.clickOnCanvas, false);
+                canvasElement.addEventListener('touchstart', self.touchOnCanvas, false);
             }
         }
+
+        self.setHeight = function() {
+            canvasElement.width = window.innerWidth;
+            canvasElement.height = window.innerHeight;
+        };
+
+        self.clickOnCanvas = function(event) {
+            // console.log(event);
+            event.stopPropagation();
+        };
+
+        self.touchOnCanvas = function(event) {};
+
+
+
+        function createBlip(shoveDown, xPos, yPos) {
+            if (shoveDown) {
+
+            }
+        }
+
+
 
         setupCanvas();
 
