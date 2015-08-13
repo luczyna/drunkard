@@ -4,8 +4,7 @@
     angular
         .module('drunkard.navigation', [])
         .directive('drunkNav', navigationDirectice)
-        .controller('NavCtrl', NavCtrl)
-        .animation('.nav-link', navLinkAnimation);
+        .controller('NavCtrl', NavCtrl);
 
     //////
 
@@ -33,7 +32,4 @@
         /* jshint validthis: true */
         var nvm = this;
     }
-
-    /* @ngInject */
-    function navLinkAnimation() {}
 })();
