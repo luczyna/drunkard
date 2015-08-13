@@ -21,7 +21,7 @@
             // can we play this game?
             // is there canvas?
             var testCanvas = document.createElement('canvas');
-            var canHasCanvas = (testCanvas.getContext) ? true : false
+            var canHasCanvas = (testCanvas.getContext) ? true : false;
 
             if (!canHasCanvas) {
                 // TODO set up a message telling people to use something else

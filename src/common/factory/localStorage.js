@@ -14,11 +14,10 @@
             settings: {}
         };
 
-        var things  = {
+        var things = {
             set: set,
             get: get,
-            // TODO add other localstorage methods
-            updateSettings: updateSettings
+            update: updateSettings
         };
 
         function set() {
@@ -31,8 +30,10 @@
             return ls[what];
         }
 
-        function updateSettings(what) {
-
+        function updateSettings(what, whatWith) {
+            ls[what] = whatWith;
+            /* jshint validthis: true */
+            this.set();
         }
 
         function setupLocalStorage() {
