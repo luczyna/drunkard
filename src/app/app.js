@@ -6,6 +6,7 @@
             'ui.router',
             'drunkard.templates',
             'drunkard.localstorage',
+            'drunkard.canvasService',
             'drunkard.configConstants',
             'ngAnimate',
             'ngTouch',
