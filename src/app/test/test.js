@@ -96,19 +96,6 @@
 
         function addRule() {}
 
-        function endTest() {
-            // show a message
-            // wait for click
-            // show score 
-            // allow user to go back
-            tvm.message.main = 'Now we will judge you';
-            tvm.message.context = null;
-
-            $timeout(function() {
-            tvm.message.show = true;
-                showResults();
-            }, 1000);
-        }
         
         function canvasInteraction() {
             if (tvm.stage === 1 && tvm.ready) {
@@ -157,10 +144,31 @@
             });
         }
 
+        function endTest() {
+            // show a message
+            // wait for click
+            // show score 
+            // allow user to go back
+            tvm.message.main = 'Now we will judge you';
+            tvm.message.context = null;
+
+            $timeout(function() {
+                tvm.message.show = true;
+                $timeout(function() {
+                    tvm.message.show = false;
+                    tvm.message.main = null;
+                    tvm.message.context = null;
+                    $timeout(function() {
+                        tvm.message.show = true;
+                        showResults();
+                    }, 2000);
+                }, 1000);
+            }, 1000);
+        }
+
         function showResults() {
             var results = exam.scoreExam();
             tvm.message.main = 'You are ' + results.what;
-            // tvm.message.context = null;
             if (results.what === 'drunk') {
                 tvm.message.context = 'Gud jahb';
             } else if (results.what === 'tipsy') {
@@ -169,15 +177,18 @@
                 tvm.message.context = 'You may keep drinking';
             }
             tvm.message.show = true;
-            
+                
             $timeout(function() {
                 tvm.endOfGame = true;
-            }, 1000);
+            }, 1500);
         }
 
         function testAgain() {
+            console.log('testing again');
             exam.clearEntries();
             tvm.stage = 0;
+
+            tvm.message.show = false;
             tvm.endOfGame = false;
 
             $timeout(function() {
@@ -190,8 +201,8 @@
     function messageEntryAnimation() {
         var hideClass = 'ng-hide';
         var message = {
-            beforeAddClass: hideMessage,
-            removeClass: showMessage
+            // beforeAddClass: hideMessage,
+            // removeClass: showMessage
         };
 
         return message;
@@ -203,6 +214,7 @@
                 return;
             }
 
+            console.log('hiding message');
             element.fadeOut(300, done);
         }
 
@@ -216,30 +228,30 @@
     }
 
     /* @ngInject */
-    function playAgainAnimation() {
-        var hideClass = 'ng-hide';
-        var message = {
-            beforeAddClass: hideMessage,
-            removeClass: showMessage
-        };
+    // function playAgainAnimation() {
+    //     var hideClass = 'ng-hide';
+    //     var message = {
+    //         beforeAddClass: hideMessage,
+    //         removeClass: showMessage
+    //     };
 
-        return message;
+    //     return message;
 
-        ///
+    //     ///
 
-        function hideMessage(element, className, done) {
-            if (className !== hideClass) {
-                return;
-            }
+    //     function hideMessage(element, className, done) {
+    //         if (className !== hideClass) {
+    //             return;
+    //         }
 
-            element.fadeOut(300, done);
-        }
+    //         element.fadeOut(300, done);
+    //     }
 
-        function showMessage(element, className, done) {
-            if (className !== hideClass) {
-                return;
-            }
-            element.hide().fadeIn(300, done);
-        }
-    }
+    //     function showMessage(element, className, done) {
+    //         if (className !== hideClass) {
+    //             return;
+    //         }
+    //         element.hide().fadeIn(300, done);
+    //     }
+    // }
 })();

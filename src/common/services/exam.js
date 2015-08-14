@@ -64,7 +64,7 @@
                 what: null,
                 score: score / max
             };
-            if (score < max / 2) {
+            if (score < (max / 2)) {
                 result.what = 'drunk';
             } else if (score < max * 0.75) {
                 result.what = 'tipsy';
@@ -86,9 +86,9 @@
             c = Math.pow(a, 2) + Math.pow(b, 2);
             distance = Math.sqrt(c);
 
-            if (distance < entry.radius / 2) {
+            if (distance < entry.radius) {
                 mark = 0;
-            } if (distance < entry.radius * 1.5) {
+            } if (distance < entry.radius * 2) {
                 mark = 2;
             } else {
                 // damn, you suck
@@ -111,7 +111,7 @@
             // if this look a lot of time 
             // AND
             // you couldn't hit the mark...
-            if (seconds > 0.6 && distance > entry.radius * 2) {
+            if (seconds > 0.6 && distance > entry.radius * 3) {
                 // there is no question! RIGHT!?!
                 mark = 10;
             }

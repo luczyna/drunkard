@@ -58,13 +58,13 @@
         };
 
         self.clickOnCanvas = function(event) {
-            console.log(event);
+            // console.log(event);
             // event.stopPropagation();
             self.coordinates = [event.clientX, event.clientY];
         };
 
         self.touchOnCanvas = function(event) {
-            console.log(event);
+            // console.log(event);
             self.coordinates = [event.touches[0].clientX, event.touches[0].clientY];
             // event.stopPropagation();
             // var force = event.touches[0].force;
