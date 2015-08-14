@@ -42,7 +42,7 @@
         //   4 change rule      5 finish and present score
         tvm.stage = 0;
         tvm.ready = false;
-        tvm.count = 20;
+        tvm.count = 5;
 
         tvm.canvasInteraction = canvasInteraction;
         tvm.primeTest = primeTest;
@@ -76,12 +76,24 @@
         }
 
         function startTest() {
-            console.log('starting the test');
+            testProblem();
+        }
+
+        function testProblem() {
+            var radius = Math.floor(Math.random() * 10) + 15;
+            canvasing.createBlip(false, false, radius).then(
+            function() {
+                tvm.ready = true;
+            },
+            function(error) {
+                console.log('error with test canvas drawing');
+            });
         }
         
         function canvasInteraction() {
             if (tvm.stage === 1 && tvm.ready) {
                 // clear the blip
+                tvm.ready = false;
                 canvasing.eraseBlip().then(
                 function() {
                     // we can go to the next stage
@@ -93,7 +105,21 @@
                     console.log('error in canvas erasing');
                 }
                 );
-            }
+            } else if (tvm.stage === 2 && tvm.ready) {
+                tvm.ready = false;
+                canvasing.eraseBlip().then(
+                function() {
+                    if (tvm.count > 1) {
+                        tvm.count--;
+                        testProblem();
+                    } else {
+                        // end of test round 1... now add rule?
+                    }
+                },
+                function(error) {
+                    console.log('error in canvas erasing');
+                });
+            } else if (tvm.stage === 3 && tvm.ready) {}
         }
     }
 })();
