@@ -7,6 +7,7 @@
             'drunkard.templates',
             'drunkard.localstorage',
             'drunkard.canvasService',
+            'drunkard.testingService',
             'drunkard.configConstants',
             'ngAnimate',
             'ngTouch',

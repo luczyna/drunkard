@@ -1,1 +1,10 @@
-<h1>test screen</h1>
+<div class="message" ng-show="tvm.message.show" ng-class="{'rule-up': tvm.message.rule}">
+    <h2 ng-bind="tvm.message.main"></h2>
+    <p ng-bind="tvm.message.context" ng-if="tvm.message.context"></p>
+</div>
+
+<div class="expletive">
+    <p ng-bind="tvm.expetive"></p>
+</div>
+
+<canvas id="drunk-canvas" class="drunk-canvas" ng-click="tvm.canvasInteraction()"></canvas>
