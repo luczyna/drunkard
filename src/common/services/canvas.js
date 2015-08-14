@@ -8,16 +8,17 @@
     //////
     //////
 
-    function canvasService() {
+    function canvasService($q, $interval, $timeout, exam) {
         /* jshint validthis: true */
         var self = this;
         var canvas, canvasElement;
+        var width = window.innerWidth;
+        var height = window.innerHeight;
 
         var things = {
-            createBlip: createBlip
+            createBlip: createBlip,
+            eraseBlip: eraseBlip
         };
-
-
 
         function setupCanvas() {
             // can we play this game?
@@ -38,12 +39,21 @@
 
                 canvasElement.addEventListener('click', self.clickOnCanvas, false);
                 canvasElement.addEventListener('touchstart', self.touchOnCanvas, false);
+
+                canvas.fillStyle = "white";
             }
         }
 
         self.setHeight = function() {
-            canvasElement.width = window.innerWidth;
-            canvasElement.height = window.innerHeight;
+            width = window.innerWidth;
+            height = window.innerHeight;
+
+            canvasElement.width = width;
+            canvasElement.height = height;
+        };
+
+        self.clearCanvas = function() {
+            canvas.clearRect(0, 0, width, height);
         };
 
         self.clickOnCanvas = function(event) {
@@ -55,13 +65,70 @@
 
 
 
-        function createBlip(shoveDown, xPos, yPos) {
-            if (shoveDown) {
+        function createBlip(shoveDown, starter, radius) {
+            var deferred = $q.defer();
 
+            var x, y,
+                message = document.querySelector('.message'),
+                offset = message.getBoundingClientRect().bottom;
+            if (starter) {
+                // down below the message, in the center
+                x = Math.floor(width / 2);
+                y = height - (height - offset) / 2;
+            } else if (shoveDown) {
+                // find the height of the message element
+                // and put the blip below it at least
+                x = Math.floor(Math.random() * width);
+                y = height - (height - offset) / 2;
+            } else {
+                x = Math.floor(Math.random() * width);
+                y = Math.floor(Math.random() * height);
             }
+
+            var entry = exam.addEntry(x, y, radius);
+            entry.interval = $interval(function() {
+                drawBlip(x, y, entry.intervalCount, radius);
+                entry.intervalCount--;
+
+                if (entry.intervalCount === 0) {
+                    $interval.cancel(entry.interval);
+                    deferred.resolve();
+                }
+            }, 66);
+
+            return deferred.promise;
         }
 
+        function drawBlip(x, y, count, radius) {
+            // canvas.clearRect(x - radius / 2, y - radius / 2, x + radius / 2, y + radius / 2);
+            // canvas.clearRect(0, 0, width, height);
+            self.clearCanvas();
+            
+            canvas.beginPath();
+            canvas.arc(x, y, radius / count, 0, 2 * Math.PI);
+            canvas.fill();
+        }
 
+        function eraseBlip() {
+            var deferred = $q.defer();
+
+            // what was the last blip?
+            var entries = exam.getEntries();
+            var entry = entries[entries.length - 1];
+
+            entry.interval = $interval(function() {
+                drawBlip(entry.position.x, entry.position.y, entry.intervalCount, entry.radius);
+                entry.intervalCount++;
+
+                if (entry.intervalCount === 10) {
+                    $interval.cancel(entry.interval);
+                    self.clearCanvas();
+                    deferred.resolve();
+                }
+            }, 66);
+
+            return deferred.promise;
+        }
 
         setupCanvas();
 

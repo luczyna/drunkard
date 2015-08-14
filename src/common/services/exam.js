@@ -43,7 +43,7 @@
 
 
 
-        return things;
+        return exam;
     }
 
     function Entry(xPos, yPos, radius) {
@@ -61,5 +61,8 @@
         this.rule = null;
         this.followedRule = null;
         this.score = null;
+
+        this.interval = null;
+        this.intervalCount = 10;
     }
 })();

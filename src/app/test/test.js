@@ -25,7 +25,7 @@
     }
 
     /* @ngInject */
-    function TestCtrl($scope, $timeout, $state, canvasing) {
+    function TestCtrl($scope, $timeout, $state, canvasing, exam) {
         /* jshint validthis: true */
         var tvm = this;
 
@@ -41,8 +41,11 @@
         //   2 started          3 add rule
         //   4 change rule      5 finish and present score
         tvm.stage = 0;
+        tvm.ready = false;
+        tvm.count = 20;
 
         tvm.canvasInteraction = canvasInteraction;
+        tvm.primeTest = primeTest;
         tvm.startTest = startTest;
 
 
@@ -57,21 +60,40 @@
             $timeout(function() {
                 tvm.message.show = true;
                 tvm.stage++;
-                
+                tvm.primeTest();
+            }, 1000);
+        }
+
+        function primeTest() {
+            $timeout(function() {
+                canvasing.createBlip(null, true, 25).then(
+                function() {
+                    tvm.ready = true;
+                }, function (error) {
+                    console.log('error in canvas drawing');
+                });
             }, 500);
         }
 
-        function canvasInteraction() {
-            if (tvm.stage === 1) {
-                // we can go to the next stage
-                tvm.message.show = false;
-                tvm.stage++;
-                tvm.startTest();
-            }
-        }
-
         function startTest() {
-
+            console.log('starting the test');
+        }
+        
+        function canvasInteraction() {
+            if (tvm.stage === 1 && tvm.ready) {
+                // clear the blip
+                canvasing.eraseBlip().then(
+                function() {
+                    // we can go to the next stage
+                    tvm.message.show = false;
+                    tvm.stage++;
+                    tvm.startTest();
+                },
+                function (error) {
+                    console.log('error in canvas erasing');
+                }
+                );
+            }
         }
     }
 })();
