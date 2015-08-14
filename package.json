@@ -71,13 +71,15 @@
     "production": "./prod/"
   },
   "vendor": [
-    "vendor/angular/angular.js",
+    "vendor/jquery/dist/jquery.min.js",
+    "vendor/angular/angular.min.js",
     "vendor/angular-ui-router/release/angular-ui-router.js",
     "vendor/angular-animate/angular-animate.js",
     "vendor/angular-touch/angular-touch.js"
   ],
   "includejs": [
-    "vendor/angular.js",
+    "vendor/jquery.min.js",
+    "vendor/angular.min.js",
     "vendor/angular-ui-router.js",
     "vendor/angular-animate.js",
     "vendor/angular-touch.js",

@@ -4,7 +4,8 @@
     angular
         .module('drunkard.test', [])
         .config(testConfig)
-        .controller('TestCtrl', TestCtrl);
+        .controller('TestCtrl', TestCtrl)
+        .animation('.message', messageEntryAnimation);
 
     //////
 
@@ -120,6 +121,34 @@
                     console.log('error in canvas erasing');
                 });
             } else if (tvm.stage === 3 && tvm.ready) {}
+        }
+    }
+
+    /* @ngInject */
+    function messageEntryAnimation() {
+        var hideClass = 'ng-hide';
+        var message = {
+            beforeAddClass: hideMessage,
+            removeClass: showMessage
+        };
+
+        return message;
+
+        ///
+
+        function hideMessage(element, className, done) {
+            if (className !== hideClass) {
+                return;
+            }
+
+            element.fadeOut(300, done);
+        }
+
+        function showMessage(element, className, done) {
+            if (className !== hideClass) {
+                return;
+            }
+            element.hide().fadeIn(300, done);
         }
     }
 })();
