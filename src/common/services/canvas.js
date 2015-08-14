@@ -17,7 +17,8 @@
 
         var things = {
             createBlip: createBlip,
-            eraseBlip: eraseBlip
+            eraseBlip: eraseBlip,
+            getCoordinates: getCoordinates
         };
 
         function setupCanvas() {
@@ -57,11 +58,17 @@
         };
 
         self.clickOnCanvas = function(event) {
-            // console.log(event);
-            event.stopPropagation();
+            console.log(event);
+            // event.stopPropagation();
+            self.coordinates = [event.clientX, event.clientY];
         };
 
-        self.touchOnCanvas = function(event) {};
+        self.touchOnCanvas = function(event) {
+            console.log(event);
+            self.coordinates = [event.touches[0].clientX, event.touches[0].clientY];
+            // event.stopPropagation();
+            // var force = event.touches[0].force;
+        };
 
 
 
@@ -83,6 +90,8 @@
             } else {
                 x = Math.floor(Math.random() * width);
                 y = Math.floor(Math.random() * height);
+                // TODO make sure the numbers 
+                // aren't too close to the bounds of the canvas
             }
 
             var entry = exam.addEntry(x, y, radius);
@@ -91,6 +100,7 @@
                 entry.intervalCount--;
 
                 if (entry.intervalCount === 0) {
+                    entry.created = new Date();
                     $interval.cancel(entry.interval);
                     deferred.resolve();
                 }
@@ -113,8 +123,7 @@
             var deferred = $q.defer();
 
             // what was the last blip?
-            var entries = exam.getEntries();
-            var entry = entries[entries.length - 1];
+            var entry = exam.getLastEntry();
 
             entry.interval = $interval(function() {
                 drawBlip(entry.position.x, entry.position.y, entry.intervalCount, entry.radius);
@@ -125,9 +134,15 @@
                     self.clearCanvas();
                     deferred.resolve();
                 }
+
+                exam.updateLastEntry(entry);
             }, 66);
 
             return deferred.promise;
+        }
+
+        function getCoordinates() {
+            return self.coordinates;
         }
 
         setupCanvas();

@@ -48,6 +48,7 @@
         tvm.canvasInteraction = canvasInteraction;
         tvm.primeTest = primeTest;
         tvm.startTest = startTest;
+        tvm.addRule = addRule;
 
 
         init();
@@ -67,7 +68,7 @@
 
         function primeTest() {
             $timeout(function() {
-                canvasing.createBlip(null, true, 25).then(
+                canvasing.createBlip(false, true, 25).then(
                 function() {
                     tvm.ready = true;
                 }, function (error) {
@@ -90,37 +91,49 @@
                 console.log('error with test canvas drawing');
             });
         }
+
+        function addRule() {}
         
         function canvasInteraction() {
             if (tvm.stage === 1 && tvm.ready) {
-                // clear the blip
-                tvm.ready = false;
-                canvasing.eraseBlip().then(
-                function() {
+                erasingEntry(function() {
                     // we can go to the next stage
+                    exam.updateLastEntry(entry);
                     tvm.message.show = false;
                     tvm.stage++;
                     tvm.startTest();
-                },
-                function (error) {
-                    console.log('error in canvas erasing');
-                }
-                );
+                });
             } else if (tvm.stage === 2 && tvm.ready) {
-                tvm.ready = false;
-                canvasing.eraseBlip().then(
-                function() {
+                erasingEntry(function() {
                     if (tvm.count > 1) {
                         tvm.count--;
                         testProblem();
                     } else {
                         // end of test round 1... now add rule?
                     }
-                },
-                function(error) {
-                    console.log('error in canvas erasing');
                 });
             } else if (tvm.stage === 3 && tvm.ready) {}
+        }
+
+        function erasingEntry(callback) {
+            // clear the blip
+            tvm.ready = false;
+            var coord = canvasing.getCoordinates;
+            var entry = exam.getLastEntry();
+
+            entry.answered = new Date();
+            entry.pinpoint.x = coord[0];
+            entry.pinpoint.y = coord[1];
+
+            canvasing.eraseBlip().then(
+            function() {
+                if (callback) {
+                    callback();
+                }
+            },
+            function (error) {
+                console.log('error in canvas erasing');
+            });
         }
     }
 

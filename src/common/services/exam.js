@@ -15,6 +15,8 @@
 
         var exam = {
             addEntry: addEntry,
+            getLastEntry: getLastEntry,
+            updateLastEntry: updateLastEntry,
             getEntries: getEntries,
             clearEntries: clearEntries,
             scoreEntry: scoreEntry,
@@ -28,6 +30,14 @@
             entries.push(entry);
 
             return entry;
+        }
+
+        function getLastEntry() {
+            return entries[entries.length - 1];
+        }
+
+        function updateLastEntry(entry) {
+            entries[entries.length - 1] = entry;
         }
 
         function getEntries() {
@@ -47,7 +57,8 @@
     }
 
     function Entry(xPos, yPos, radius) {
-        this.created = new Date();
+        // this.created = new Date();
+        this.created = null;
         this.position = {
             x: xPos,
             y: yPos
