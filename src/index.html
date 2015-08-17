@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="theme-default" ng-app="drunkard" ng-controller="AppCtrl">
+<html ng-class="{'theme-psychadelic': drunkSettings.psychadelic, 'theme-default': !drunkSettings.psychadelic}" ng-app="drunkard" ng-controller="AppCtrl">
     <head>
         <meta charset="utf-8">
         <title ng-bind="pageTitle"></title>

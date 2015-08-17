@@ -1,14 +1,38 @@
-body.theme-psychadelic {
+$default:   rgb(240, 101, 35);
+$opposite:  rgb(20, 21, 43);
+$tertiary:  rgb(0, 9, 255);
+$splash:    rgb(72, 204, 20);
 
-    $default:   rgb(240, 101, 35);
-    $opposite:  rgb(20, 21, 43);
-    $tertiary:  rgb(0, 9, 255);
-    $splash:    rgb(72, 204, 20);
-
+html.theme-psychadelic {
     background: $default;
     color: $grey-1;
 
-    @include animation(pschadelicTrip 10s infinite alternate ease-in-out);
+    @include animation(pschadelicTrip 10s 1s infinite alternate ease-in-out);
+}
+
+body.theme-psychadelic {
+
+    input:focus,
+    input[type="checkbox"]:focus {
+        outline: 2px $tertiary solid;
+    }
+
+    a {
+        color: $black;
+        border-bottom: 0 $tertiary solid;
+        @include transition(color 0.2s ease-in-out, border-width 0.2s ease-in);
+
+        &:hover,
+        &:focus {
+            color: $tertiary;
+        }
+
+        &:focus {
+            outline: 0;
+            border-width: 2px;
+            text-decoration: none;
+        }
+    }   
 }
 
 @-webkit-keyframes pschadelicTrip {

@@ -5,6 +5,7 @@ html, body {
     position: relative;
     font-weight: 300;
     font-family: 'Exo 2', sans-serif;
+    @include transition(background-color 0.3s ease-in-out);
 }
 html {
     box-sizing: border-box;
