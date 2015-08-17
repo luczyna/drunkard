@@ -40,8 +40,12 @@
 
         ///
 
-        function updateSettings() {
+        function updateSettings(which) {
             settings.setSettings(svm.inputs);
+
+            if (which === 'psychadelic') {
+                $scope.$emit('changePsychadelic', {isPsychadelic: svm.inputs.psychadelic});
+            }
         }
 
         function initSettings() {

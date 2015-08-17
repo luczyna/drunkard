@@ -16,7 +16,7 @@
         <% scripts.forEach( function ( file ) { %>
         <script type="text/javascript" src="<%= file %>"></script><% }); %>
     </head>
-    <body class="theme-default">
+    <body ng-class="{'theme-psychadelic': drunkSettings.psychadelic, 'theme-default': !drunkSettings.psychadelic}">
         <nav drunk-nav></nav>
 
         <div class="main-container" ui-view="main"></div>
