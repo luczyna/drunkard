@@ -38,8 +38,6 @@
 
     /* @ngInject */
     function AppCtrl($scope, $state, settings) {
-        console.log($scope);
-
         $scope.drunkSettings = {
             psychadelic: settings.isPsychadelic()
         };
