@@ -8,6 +8,7 @@
             'drunkard.localstorage',
             'drunkard.canvasService',
             'drunkard.testingService',
+            'drunkard.settingsService',
             'drunkard.configConstants',
             'ngAnimate',
             'ngTouch',
@@ -32,7 +33,9 @@
     }
 
     /* @ngInject */
-    function run() {}
+    function run(settings) {
+        // console.log('this is getting called');
+    }
 
 
     /* @ngInject */
