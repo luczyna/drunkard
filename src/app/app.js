@@ -8,6 +8,7 @@
             'drunkard.localstorage',
             'drunkard.canvasService',
             'drunkard.testingService',
+            'drunkard.settingsService',
             'drunkard.configConstants',
             'ngAnimate',
             'ngTouch',
@@ -36,13 +37,22 @@
 
 
     /* @ngInject */
-    function AppCtrl($scope, $state) {
+    function AppCtrl($scope, $state, settings) {
+        $scope.drunkSettings = {
+            psychadelic: settings.isPsychadelic()
+        };
+        
         $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             if (angular.isDefined(toState.data.pageTitle)) {
                 $scope.pageTitle = toState.data.pageTitle + ' | drunkard';
             }
 
             $scope.$broadcast('pageTitle', toState);
+        });
+
+
+        $scope.$on('changePsychadelic', function(event, poop) {
+            $scope.drunkSettings.psychadelic = poop.isPsychadelic;
         });
     }
 })();

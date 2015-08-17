@@ -25,7 +25,7 @@
     }
 
     /* @ngInject */
-    function SettingsCtrl($scope, localstore) {
+    function SettingsCtrl($scope, settings) {
         /* jshint validthis: true */
         var svm = this;
 
@@ -40,22 +40,17 @@
 
         ///
 
-        function updateSettings() {
-            localstore.update('settings', svm.inputs);
+        function updateSettings(which) {
+            settings.setSettings(svm.inputs);
+
+            if (which === 'psychadelic') {
+                $scope.$emit('changePsychadelic', {isPsychadelic: svm.inputs.psychadelic});
+            }
         }
 
         function initSettings() {
-            // what are the settings in the localstorage?
-            var storage = localstore.get('settings');
-
-            if (storage && 
-                storage.psychadelic !== undefined && 
-                storage.colourBlind !== undefined) {
-                    svm.inputs.psychadelic = storage.psychadelic;
-                    svm.inputs.colourBlind = storage.colourBlind;
-            } else {
-                localstore.update('settings', svm.inputs);
-            }
+            svm.inputs.psychadelic = settings.isPsychadelic();
+            svm.inputs.colourBlind = settings.isColourBlind();
         }
     }
 })();
