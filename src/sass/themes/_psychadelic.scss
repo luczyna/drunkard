@@ -1,4 +1,4 @@
-body.theme-sunshine {
+body.theme-psychadelic {
 
     $default:   rgb(240, 101, 35);
     $opposite:  rgb(20, 21, 43);
@@ -7,4 +7,39 @@ body.theme-sunshine {
 
     background: $default;
     color: $grey-1;
+
+    @include animation(pschadelicTrip 10s infinite alternate ease-in-out);
+}
+
+@-webkit-keyframes pschadelicTrip {
+    0%   { background-color: #E1E7B6; }
+    20%  { background-color: #C34B89; }
+    40%  { background-color: #8F39AC; }
+    60%  { background-color: #57BEC7; }
+    80%  { background-color: #7BD175; }
+    100% { background-color: #5BC6C8; }
+}
+@-moz-keyframes pschadelicTrip {
+    0%   { background-color: #E1E7B6; }
+    20%  { background-color: #C34B89; }
+    40%  { background-color: #8F39AC; }
+    60%  { background-color: #57BEC7; }
+    80%  { background-color: #7BD175; }
+    100% { background-color: #5BC6C8; }
+}
+@-o-keyframes pschadelicTrip {
+    0%   { background-color: #E1E7B6; }
+    20%  { background-color: #C34B89; }
+    40%  { background-color: #8F39AC; }
+    60%  { background-color: #57BEC7; }
+    80%  { background-color: #7BD175; }
+    100% { background-color: #5BC6C8; }
+}
+@keyframes pschadelicTrip {
+    0%   { background-color: #E1E7B6; }
+    20%  { background-color: #C34B89; }
+    40%  { background-color: #8F39AC; }
+    60%  { background-color: #57BEC7; }
+    80%  { background-color: #7BD175; }
+    100% { background-color: #5BC6C8; }
 }
