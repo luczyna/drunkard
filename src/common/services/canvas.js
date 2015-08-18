@@ -148,16 +148,14 @@
 
         function wasClose(entry) {
             var close = false;
-            console.log([self.coordinates[0], entry.pinpoint.x]);
-            console.log([self.coordinates[1], entry.pinpoint.y]);
+            var buffer = 1.5;
 
-            var wasCloseInX = Math.abs(self.coordinates[0] - entry.pinpoint.x) < (entry.radius * 2);
-            var wasCloseInY = Math.abs(self.coordinates[1] - entry.pinpoint.y) < (entry.radius * 2);
+            var wasCloseInX = Math.abs(entry.pinpoint.x - entry.position.x) < (entry.radius * buffer);
+            var wasCloseInY = Math.abs(entry.pinpoint.y - entry.position.y) < (entry.radius * buffer);
             if (wasCloseInX && wasCloseInY) {
                 close = true;
             }
 
-            console.log('the mark was close: %s', close);
             return close;
         }
 

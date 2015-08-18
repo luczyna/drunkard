@@ -32,3 +32,35 @@
     }
 }
 
+.expletive {
+    position: absolute;
+
+    &.shakeIt {
+        @include animation(likeAPolaroid 0.3s 0s 2 alternate ease-in-out);
+    }
+}
+
+@-webkit-keyframes likeAPolaroid {
+    0%   { transform: rotate(0); }
+    40%  { transform: rotate(10deg); }
+    80%  { transform: rotate(-10deg); }
+    100% { transform: rotate(0); }
+}
+@-moz-keyframes likeAPolaroid {
+    0%   { transform: rotate(0); }
+    40%  { transform: rotate(10deg); }
+    80%  { transform: rotate(-10deg); }
+    100% { transform: rotate(0); }
+}
+@-o-keyframes likeAPolaroid {
+    0%   { transform: rotate(0); }
+    40%  { transform: rotate(10deg); }
+    80%  { transform: rotate(-10deg); }
+    100% { transform: rotate(0); }
+}
+@keyframes likeAPolaroid {
+    0%   { transform: rotate(0); }
+    40%  { transform: rotate(10deg); }
+    80%  { transform: rotate(-10deg); }
+    100% { transform: rotate(0); }
+}

@@ -47,7 +47,7 @@
         //   4 change rule      5 finish and present score
         tvm.stage = 0;
         tvm.ready = false;
-        tvm.count = 1;
+        tvm.count = 10;
 
         tvm.canvasInteraction = canvasInteraction;
         tvm.primeTest = primeTest;
@@ -110,10 +110,6 @@
                     tvm.startTest();
                 });
             } else if (tvm.stage === 2 && tvm.ready) {
-                if (canvasing.wasClose(exam.getLastEntry())) {
-                    tvm.setExpletive();
-                }
-
                 erasingEntry(function() {
                     if (tvm.count >= 1) {
                         tvm.count--;
@@ -133,6 +129,8 @@
         function erasingEntry(callback) {
             // clear the blip
             tvm.ready = false;
+
+            //update the blip
             var coord = canvasing.getCoordinates();
             var entry = exam.getLastEntry();
 
@@ -140,9 +138,16 @@
             entry.pinpoint.x = coord[0];
             entry.pinpoint.y = coord[1];
 
+            if (tvm.stage === 2 && canvasing.wasClose(entry)) {
+                tvm.setExpletive();
+            }
+
+            exam.updateLastEntry(entry);
+            
             canvasing.eraseBlip().then(
             function() {
-                exam.updateLastEntry(entry);
+                // var entry = exam.getLastEntry();
+                // exam.updateLastEntry(entry);
                 if (callback) {
                     callback();
                 }
@@ -290,5 +295,35 @@
     }
 
     /* @ngInject */
-    function expletiveAnimation() {}
+    function expletiveAnimation(exam) {
+        var hideClass = 'ng-hide';
+        var expletive = {
+            beforeAddClass: hideAnExpletive,
+            removeClass: showAnExpletive
+        };
+
+        return expletive;
+
+        ///
+
+        function hideAnExpletive(element, className, done) {
+            if (className !== hideClass) {
+                return;
+            }
+
+            element.removeClass('shakeIt').fadeOut(300, done);
+        }
+
+        function showAnExpletive(element, className, done) {
+            if (className !== hideClass) {
+                return;
+            }
+            var position = exam.getLastEntry().position;
+            console.log(position);
+            element.hide().css({
+                'top': position.y,
+                'left': position.x
+            }).fadeIn(300, done).addClass('shakeIt');
+        }
+    }
 })();
