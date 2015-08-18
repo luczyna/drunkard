@@ -18,7 +18,8 @@
         var things = {
             createBlip: createBlip,
             eraseBlip: eraseBlip,
-            getCoordinates: getCoordinates
+            getCoordinates: getCoordinates,
+            wasClose: wasClose
         };
 
         function setupCanvas() {
@@ -143,6 +144,19 @@
 
         function getCoordinates() {
             return self.coordinates;
+        }
+
+        function wasClose(entry) {
+            var close = false;
+            var buffer = 1.5;
+
+            var wasCloseInX = Math.abs(entry.pinpoint.x - entry.position.x) < (entry.radius * buffer);
+            var wasCloseInY = Math.abs(entry.pinpoint.y - entry.position.y) < (entry.radius * buffer);
+            if (wasCloseInX && wasCloseInY) {
+                close = true;
+            }
+
+            return close;
         }
 
         setupCanvas();
