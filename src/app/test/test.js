@@ -48,6 +48,7 @@
         tvm.stage = 0;
         tvm.ready = false;
         tvm.count = 10;
+        tvm.havePlayed = false;
 
         tvm.canvasInteraction = canvasInteraction;
         tvm.primeTest = primeTest;
@@ -63,7 +64,8 @@
 
         function init() {
             tvm.message.main = 'Tap/Click the circle';
-            tvm.message.context = 'Let\'s see how drunk you are';
+            tvm.message.context = !tvm.havePlayed ? 'Let\'s see how drunk you are' : null;
+            tvm.count = 10;
 
             $timeout(function() {
                 tvm.message.show = true;
@@ -204,12 +206,12 @@
                 $timeout(function() {
                     // show test again button - B
                     tvm.endOfGame = true;
+                    tvm.havePlayed = true;
                 }, 1500); // show test again button - B
             }, 50); // show after render - A
         }
 
         function testAgain() {
-            console.log('testing again');
             exam.clearEntries();
             tvm.stage = 0;
 
@@ -319,7 +321,6 @@
                 return;
             }
             var position = exam.getLastEntry().position;
-            console.log(position);
             element.hide().css({
                 'top': position.y,
                 'left': position.x
