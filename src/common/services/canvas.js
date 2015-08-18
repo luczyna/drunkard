@@ -95,8 +95,25 @@
             } else {
                 x = Math.floor(Math.random() * width);
                 y = Math.floor(Math.random() * height);
-                // TODO make sure the numbers 
-                // aren't too close to the bounds of the canvas
+
+            }
+            
+            // make sure the numbers 
+            // aren't too close to the bounds of the canvas
+            if (x > width - radius * 2) {
+                x = width - radius * 2;
+            }
+
+            if (x < radius * 2) {
+                x = radius * 2;
+            }
+
+            if (y > height - radius * 2) {
+                y = height - radius * 2;
+            }
+
+            if (y < radius * 2) {
+                y = radius * 2;
             }
 
             var entry = exam.addEntry(x, y, radius);
@@ -152,7 +169,7 @@
 
         function wasClose(entry) {
             var close = false;
-            var buffer = 1.5;
+            var buffer = 2;
 
             var wasCloseInX = Math.abs(entry.pinpoint.x - entry.position.x) < (entry.radius * buffer);
             var wasCloseInY = Math.abs(entry.pinpoint.y - entry.position.y) < (entry.radius * buffer);
