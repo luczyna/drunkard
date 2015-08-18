@@ -6,6 +6,7 @@
             'ui.router',
             'drunkard.templates',
             'drunkard.localstorage',
+            'drunkard.entryFactory',
             'drunkard.canvasService',
             'drunkard.testingService',
             'drunkard.settingsService',
