@@ -5,7 +5,8 @@
         .module('drunkard.test', [])
         .config(testConfig)
         .controller('TestCtrl', TestCtrl)
-        .animation('.message', messageEntryAnimation);
+        .animation('.message', messageEntryAnimation)
+        .animation('.playAgain', playAgainButtonAnimation);
 
     //////
 
@@ -44,7 +45,7 @@
         //   4 change rule      5 finish and present score
         tvm.stage = 0;
         tvm.ready = false;
-        tvm.count = 2;
+        tvm.count = 1;
 
         tvm.canvasInteraction = canvasInteraction;
         tvm.primeTest = primeTest;
@@ -225,8 +226,6 @@
             if (className !== hideClass) {
                 return;
             }
-
-            console.log('hiding message');
             element.fadeOut(300, done);
         }
 
@@ -234,36 +233,36 @@
             if (className !== hideClass) {
                 return;
             }
-            console.log('showing message');
             element.hide().fadeIn(300, done);
         }
     }
 
     /* @ngInject */
-    // function playAgainAnimation() {
-    //     var hideClass = 'ng-hide';
-    //     var message = {
-    //         beforeAddClass: hideMessage,
-    //         removeClass: showMessage
-    //     };
+    function playAgainButtonAnimation() {
+        var hideClass = 'ng-hide';
+        var message = {
+            beforeAddClass: hideButton,
+            removeClass: showButton
+        };
 
-    //     return message;
+        return message;
 
-    //     ///
+        ///
 
-    //     function hideMessage(element, className, done) {
-    //         if (className !== hideClass) {
-    //             return;
-    //         }
+        function hideButton(element, className, done) {
+            if (className !== hideClass) {
+                return;
+            }
 
-    //         element.fadeOut(300, done);
-    //     }
+            element.removeClass('slideUp').fadeOut(300, done);
+        }
 
-    //     function showMessage(element, className, done) {
-    //         if (className !== hideClass) {
-    //             return;
-    //         }
-    //         element.hide().fadeIn(300, done);
-    //     }
-    // }
+        function showButton(element, className, done) {
+            if (className !== hideClass) {
+                return;
+            }
+            // element.hide().addClass('slideUp').fadeIn(300, done);
+            element.hide().fadeIn(300, done).addClass('slideUp');
+        }
+    }
 })();
