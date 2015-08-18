@@ -10,29 +10,45 @@ html.theme-darkBlue {
 }
 
 body.theme-default, 
-body.theme-darkBlue {}
+body.theme-darkBlue {
 
-
-
-
-input:focus,
-input[type="checkbox"]:focus {
-    outline: 2px $tertiary solid;
-}
-
-a {
-    color: $white-3;
-    border-bottom: 0 $tertiary solid;
-    @include transition(color 0.2s ease-in-out, border-width 0.2s ease-in);
-
-    &:hover,
-    &:focus {
-        color: $tertiary;
+    input:focus,
+    input[type="checkbox"]:focus {
+        outline: 2px $tertiary solid;
     }
 
-    &:focus {
-        outline: 0;
-        border-width: 2px;
-        text-decoration: none;
+    a {
+        color: $white-3;
+        border-bottom: 0 $tertiary solid;
+        @include transition(color 0.2s ease-in-out, border-width 0.2s ease-in);
+
+        &:hover,
+        &:focus {
+            color: $tertiary;
+        }
+
+        &:focus {
+            outline: 0;
+            border-width: 2px;
+            text-decoration: none;
+        }
+    }
+
+
+    .playAgain {
+        background: $white;
+        color: $opposite;
+        border: 4px transparent solid;
+
+        &:hover,
+        &:focus {
+            background: $opposite;
+            color: $white;    
+        }
+
+        &:focus {
+            outline: 0;
+            border: 4px $tertiary solid;
+        }
     }
 }
