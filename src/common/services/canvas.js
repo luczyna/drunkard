@@ -47,11 +47,15 @@
         }
 
         self.setHeight = function() {
-            width = window.innerWidth;
-            height = window.innerHeight;
+            var header = $('.nav-container');
+            width = window.innerWidth * 0.95;
+            height = (window.innerHeight - header.innerHeight()) * 0.975;
 
             canvasElement.width = width;
             canvasElement.height = height;
+            
+            canvasElement.style.top = header.innerHeight() + 'px';
+            canvasElement.style.left = window.innerWidth * 0.025 + 'px';
         };
 
         self.clearCanvas = function() {
@@ -159,6 +163,7 @@
             return close;
         }
 
+        // $(window).on('load', setupCanvas);
         setupCanvas();
 
         return things;
