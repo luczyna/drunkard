@@ -44,7 +44,7 @@
         //   4 change rule      5 finish and present score
         tvm.stage = 0;
         tvm.ready = false;
-        tvm.count = 3;
+        tvm.count = 2;
 
         tvm.canvasInteraction = canvasInteraction;
         tvm.primeTest = primeTest;
@@ -146,24 +146,31 @@
 
         function endTest() {
             // show a message
-            // wait for click
             // show score 
             // allow user to go back
             tvm.message.main = 'Now we will judge you';
             tvm.message.context = null;
 
             $timeout(function() {
+                //show - A
                 tvm.message.show = true;
+
                 $timeout(function() {
+                    // hide - B
                     tvm.message.show = false;
-                    tvm.message.main = null;
-                    tvm.message.context = null;
+
                     $timeout(function() {
-                        tvm.message.show = true;
-                        showResults();
-                    }, 2000);
-                }, 1000);
-            }, 1000);
+                        // empty - C                       
+                        tvm.message.main = null;
+                        tvm.message.context = null;
+                        
+                        $timeout(function() {
+                            // render for showing later - D
+                            showResults();
+                        }, 1500); // render for later - D
+                    }, 350); // empty - C
+                }, 2000); // show - B
+            }, 1000); // show - A
         }
 
         function showResults() {
@@ -176,11 +183,16 @@
             } else {
                 tvm.message.context = 'You may keep drinking';
             }
-            tvm.message.show = true;
-                
+
             $timeout(function() {
-                tvm.endOfGame = true;
-            }, 1500);
+                // show after render - A
+                tvm.message.show = true;
+                
+                $timeout(function() {
+                    // show test again button - B
+                    tvm.endOfGame = true;
+                }, 1500); // show test again button - B
+            }, 50); // show after render - A
         }
 
         function testAgain() {
@@ -201,8 +213,8 @@
     function messageEntryAnimation() {
         var hideClass = 'ng-hide';
         var message = {
-            // beforeAddClass: hideMessage,
-            // removeClass: showMessage
+            beforeAddClass: hideMessage,
+            removeClass: showMessage
         };
 
         return message;
