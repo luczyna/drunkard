@@ -8,7 +8,7 @@
     //////
     //////
 
-    function testingService() {
+    function testingService(Entry) {
         /* jshint validthis: true */
         var self = this;
         var entries = [];
@@ -122,26 +122,5 @@
 
 
         return exam;
-    }
-
-    function Entry(xPos, yPos, radius) {
-        // this.created = new Date();
-        this.created = null;
-        this.position = {
-            x: xPos,
-            y: yPos
-        };
-        this.radius = radius;
-        this.answered = null;
-        this.pinpoint = {
-            x: null,
-            y: null
-        };
-        this.rule = null;
-        this.followedRule = null;
-        this.score = null;
-
-        this.interval = null;
-        this.intervalCount = 10;
     }
 })();
