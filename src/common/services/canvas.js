@@ -105,7 +105,7 @@
                     $interval.cancel(entry.interval);
                     deferred.resolve();
                 }
-            }, 66);
+            }, 16);
 
             return deferred.promise;
         }
@@ -130,14 +130,14 @@
                 drawBlip(entry.position.x, entry.position.y, entry.intervalCount, entry.radius);
                 entry.intervalCount++;
 
-                if (entry.intervalCount === 10) {
+                if (entry.intervalCount === entry.intervalLimit) {
                     $interval.cancel(entry.interval);
                     self.clearCanvas();
                     deferred.resolve();
                 }
 
                 exam.updateLastEntry(entry);
-            }, 66);
+            }, 16);
 
             return deferred.promise;
         }
