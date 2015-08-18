@@ -6,7 +6,8 @@
         .config(testConfig)
         .controller('TestCtrl', TestCtrl)
         .animation('.message', messageEntryAnimation)
-        .animation('.playAgain', playAgainButtonAnimation);
+        .animation('.playAgain', playAgainButtonAnimation)
+        .animation('.expletive', expletiveAnimation);
 
     //////
 
@@ -27,7 +28,7 @@
     }
 
     /* @ngInject */
-    function TestCtrl($scope, $timeout, $state, canvasing, exam) {
+    function TestCtrl($scope, $timeout, $state, canvasing, exam, expletives) {
         /* jshint validthis: true */
         var tvm = this;
 
@@ -37,6 +38,7 @@
             show: false
         };
         tvm.expletive = '';
+        tvm.showExpletive = false;
         tvm.endOfGame = false;
 
         // stages of the test
@@ -53,6 +55,7 @@
         tvm.addRule = addRule;
         tvm.endTest = endTest;
         tvm.testAgain = testAgain;
+        tvm.setExpletive = setExpletive;
 
         init();
 
@@ -107,8 +110,12 @@
                     tvm.startTest();
                 });
             } else if (tvm.stage === 2 && tvm.ready) {
+                if (canvasing.wasClose(exam.getLastEntry())) {
+                    tvm.setExpletive();
+                }
+
                 erasingEntry(function() {
-                    if (tvm.count > 1) {
+                    if (tvm.count >= 1) {
                         tvm.count--;
                         testProblem();
                     } else {
@@ -126,7 +133,7 @@
         function erasingEntry(callback) {
             // clear the blip
             tvm.ready = false;
-            var coord = canvasing.getCoordinates;
+            var coord = canvasing.getCoordinates();
             var entry = exam.getLastEntry();
 
             entry.answered = new Date();
@@ -208,6 +215,22 @@
                 init();
             }, 1000);
         }
+
+        function setExpletive() {
+            var text = expletives[Math.floor(Math.random() * expletives.length)];
+            tvm.expletive = text;
+
+            $timeout(function() {
+                // show expletive - A
+                tvm.showExpletive = true;
+
+                $timeout(function() {
+                    // hide expletive - B
+                    tvm.showExpletive = false;
+                }, 500); // hide expletive - B
+            }, 10); // show expletive - A
+
+        }
     }
 
     /* @ngInject */
@@ -265,4 +288,7 @@
             element.hide().fadeIn(300, done).addClass('slideUp');
         }
     }
+
+    /* @ngInject */
+    function expletiveAnimation() {}
 })();

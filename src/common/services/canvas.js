@@ -18,7 +18,8 @@
         var things = {
             createBlip: createBlip,
             eraseBlip: eraseBlip,
-            getCoordinates: getCoordinates
+            getCoordinates: getCoordinates,
+            wasClose: wasClose
         };
 
         function setupCanvas() {
@@ -143,6 +144,21 @@
 
         function getCoordinates() {
             return self.coordinates;
+        }
+
+        function wasClose(entry) {
+            var close = false;
+            console.log([self.coordinates[0], entry.pinpoint.x]);
+            console.log([self.coordinates[1], entry.pinpoint.y]);
+
+            var wasCloseInX = Math.abs(self.coordinates[0] - entry.pinpoint.x) < (entry.radius * 2);
+            var wasCloseInY = Math.abs(self.coordinates[1] - entry.pinpoint.y) < (entry.radius * 2);
+            if (wasCloseInX && wasCloseInY) {
+                close = true;
+            }
+
+            console.log('the mark was close: %s', close);
+            return close;
         }
 
         setupCanvas();
