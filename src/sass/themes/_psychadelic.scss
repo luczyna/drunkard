@@ -18,7 +18,7 @@ body.theme-psychadelic {
     }
 
     a {
-        color: $black;
+        color: $splash;
         border-bottom: 0 $tertiary solid;
         @include transition(color 0.2s ease-in-out, border-width 0.2s ease-in);
 
@@ -32,7 +32,31 @@ body.theme-psychadelic {
             border-width: 2px;
             text-decoration: none;
         }
-    }   
+    }
+
+
+    .message {
+        // this has improved psychadelic mode greatly
+        color: $splash;
+    }
+
+
+    .playAgain {
+        background: $white;
+        color: $opposite;
+        border: 4px transparent solid;
+
+        &:hover,
+        &:focus {
+            background: $opposite;
+            color: $white;    
+        }
+
+        &:focus {
+            outline: 0;
+            border: 4px $tertiary solid;
+        }
+    }
 }
 
 @-webkit-keyframes pschadelicTrip {

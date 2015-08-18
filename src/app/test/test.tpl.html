@@ -2,11 +2,11 @@
     <h2 ng-bind="tvm.message.main"></h2>
     <p ng-bind="tvm.message.context" ng-if="tvm.message.context"></p>
 
-    <button ng-click="tvm.testAgain()" ng-show="tvm.endOfGame">Try Again</button>
+    <button class="playAgain" ng-click="tvm.testAgain()" ng-show="tvm.endOfGame">Try Again</button>
 </div>
 
-<div class="expletive">
-    <p ng-bind="tvm.expetive"></p>
+<div class="expletive" ng-show="tvm.showExpletive">
+    <p ng-bind="tvm.expletive"></p>
 </div>
 
 <canvas id="drunk-canvas" class="drunk-canvas" ng-click="tvm.canvasInteraction()"></canvas>

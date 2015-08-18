@@ -18,7 +18,8 @@
         var things = {
             createBlip: createBlip,
             eraseBlip: eraseBlip,
-            getCoordinates: getCoordinates
+            getCoordinates: getCoordinates,
+            wasClose: wasClose
         };
 
         function setupCanvas() {
@@ -104,7 +105,7 @@
                     $interval.cancel(entry.interval);
                     deferred.resolve();
                 }
-            }, 66);
+            }, 16);
 
             return deferred.promise;
         }
@@ -129,20 +130,33 @@
                 drawBlip(entry.position.x, entry.position.y, entry.intervalCount, entry.radius);
                 entry.intervalCount++;
 
-                if (entry.intervalCount === 10) {
+                if (entry.intervalCount === entry.intervalLimit) {
                     $interval.cancel(entry.interval);
                     self.clearCanvas();
                     deferred.resolve();
                 }
 
                 exam.updateLastEntry(entry);
-            }, 66);
+            }, 16);
 
             return deferred.promise;
         }
 
         function getCoordinates() {
             return self.coordinates;
+        }
+
+        function wasClose(entry) {
+            var close = false;
+            var buffer = 1.5;
+
+            var wasCloseInX = Math.abs(entry.pinpoint.x - entry.position.x) < (entry.radius * buffer);
+            var wasCloseInY = Math.abs(entry.pinpoint.y - entry.position.y) < (entry.radius * buffer);
+            if (wasCloseInX && wasCloseInY) {
+                close = true;
+            }
+
+            return close;
         }
 
         setupCanvas();

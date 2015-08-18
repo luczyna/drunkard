@@ -8,7 +8,7 @@
     //////
     //////
 
-    function testingService() {
+    function testingService(Entry) {
         /* jshint validthis: true */
         var self = this;
         var entries = [];
@@ -86,9 +86,9 @@
             c = Math.pow(a, 2) + Math.pow(b, 2);
             distance = Math.sqrt(c);
 
-            if (distance < entry.radius) {
+            if (distance < entry.radius * 1.5) {
                 mark = 0;
-            } if (distance < entry.radius * 2) {
+            } else if (distance < entry.radius * 3) {
                 mark = 2;
             } else {
                 // damn, you suck
@@ -97,12 +97,12 @@
 
             // how long did it take to finish
             var time, seconds, moreTrouble;
-            time = Date.parse(entry.answered) - Date.parse(entry.created);
+            time = entry.answered.getTime() - entry.created.getTime();
             seconds = time / 1000;
-            if (seconds < 0.3) {
+            if (seconds < 0.5) {
                 moreTrouble = 0;
-            } else if (seconds < 0.6) {
-                moreTrouble = 3;
+            } else if (seconds < 1.2) {
+                moreTrouble = 2;
             } else {
                 moreTrouble = 4;
             }
@@ -111,7 +111,7 @@
             // if this look a lot of time 
             // AND
             // you couldn't hit the mark...
-            if (seconds > 0.6 && distance > entry.radius * 3) {
+            if (seconds > 2 && distance > entry.radius * 4) {
                 // there is no question! RIGHT!?!
                 mark = 10;
             }
@@ -122,26 +122,5 @@
 
 
         return exam;
-    }
-
-    function Entry(xPos, yPos, radius) {
-        // this.created = new Date();
-        this.created = null;
-        this.position = {
-            x: xPos,
-            y: yPos
-        };
-        this.radius = radius;
-        this.answered = null;
-        this.pinpoint = {
-            x: null,
-            y: null
-        };
-        this.rule = null;
-        this.followedRule = null;
-        this.score = null;
-
-        this.interval = null;
-        this.intervalCount = 10;
     }
 })();

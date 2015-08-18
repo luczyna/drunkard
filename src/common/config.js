@@ -4,6 +4,14 @@
     angular
         .module('drunkard.configConstants', [])
 
-        .constant('test', [])
+        .constant('expletives', [
+            'nice!',
+            'woah!',
+            'radical',
+            'good',
+            'gud',
+            'yes',
+            'yiss'
+        ])
     ;
 })();

@@ -5,7 +5,9 @@
         .module('drunkard.test', [])
         .config(testConfig)
         .controller('TestCtrl', TestCtrl)
-        .animation('.message', messageEntryAnimation);
+        .animation('.message', messageEntryAnimation)
+        .animation('.playAgain', playAgainButtonAnimation)
+        .animation('.expletive', expletiveAnimation);
 
     //////
 
@@ -26,7 +28,7 @@
     }
 
     /* @ngInject */
-    function TestCtrl($scope, $timeout, $state, canvasing, exam) {
+    function TestCtrl($scope, $timeout, $state, canvasing, exam, expletives) {
         /* jshint validthis: true */
         var tvm = this;
 
@@ -36,6 +38,7 @@
             show: false
         };
         tvm.expletive = '';
+        tvm.showExpletive = false;
         tvm.endOfGame = false;
 
         // stages of the test
@@ -44,7 +47,7 @@
         //   4 change rule      5 finish and present score
         tvm.stage = 0;
         tvm.ready = false;
-        tvm.count = 3;
+        tvm.havePlayed = false;
 
         tvm.canvasInteraction = canvasInteraction;
         tvm.primeTest = primeTest;
@@ -52,6 +55,7 @@
         tvm.addRule = addRule;
         tvm.endTest = endTest;
         tvm.testAgain = testAgain;
+        tvm.setExpletive = setExpletive;
 
         init();
 
@@ -59,7 +63,8 @@
 
         function init() {
             tvm.message.main = 'Tap/Click the circle';
-            tvm.message.context = 'Let\'s see how drunk you are';
+            tvm.message.context = !tvm.havePlayed ? 'Let\'s see how drunk you are' : null;
+            tvm.count = 10;
 
             $timeout(function() {
                 tvm.message.show = true;
@@ -107,7 +112,7 @@
                 });
             } else if (tvm.stage === 2 && tvm.ready) {
                 erasingEntry(function() {
-                    if (tvm.count > 1) {
+                    if (tvm.count >= 1) {
                         tvm.count--;
                         testProblem();
                     } else {
@@ -125,16 +130,25 @@
         function erasingEntry(callback) {
             // clear the blip
             tvm.ready = false;
-            var coord = canvasing.getCoordinates;
+
+            //update the blip
+            var coord = canvasing.getCoordinates();
             var entry = exam.getLastEntry();
 
             entry.answered = new Date();
             entry.pinpoint.x = coord[0];
             entry.pinpoint.y = coord[1];
 
+            if (tvm.stage === 2 && canvasing.wasClose(entry)) {
+                tvm.setExpletive();
+            }
+
+            exam.updateLastEntry(entry);
+            
             canvasing.eraseBlip().then(
             function() {
-                exam.updateLastEntry(entry);
+                // var entry = exam.getLastEntry();
+                // exam.updateLastEntry(entry);
                 if (callback) {
                     callback();
                 }
@@ -146,24 +160,31 @@
 
         function endTest() {
             // show a message
-            // wait for click
             // show score 
             // allow user to go back
             tvm.message.main = 'Now we will judge you';
             tvm.message.context = null;
 
             $timeout(function() {
+                //show - A
                 tvm.message.show = true;
+
                 $timeout(function() {
+                    // hide - B
                     tvm.message.show = false;
-                    tvm.message.main = null;
-                    tvm.message.context = null;
+
                     $timeout(function() {
-                        tvm.message.show = true;
-                        showResults();
-                    }, 2000);
-                }, 1000);
-            }, 1000);
+                        // empty - C                       
+                        tvm.message.main = null;
+                        tvm.message.context = null;
+                        
+                        $timeout(function() {
+                            // render for showing later - D
+                            showResults();
+                        }, 1500); // render for later - D
+                    }, 350); // empty - C
+                }, 2000); // show - B
+            }, 1000); // show - A
         }
 
         function showResults() {
@@ -176,15 +197,20 @@
             } else {
                 tvm.message.context = 'You may keep drinking';
             }
-            tvm.message.show = true;
-                
+
             $timeout(function() {
-                tvm.endOfGame = true;
-            }, 1500);
+                // show after render - A
+                tvm.message.show = true;
+                
+                $timeout(function() {
+                    // show test again button - B
+                    tvm.endOfGame = true;
+                    tvm.havePlayed = true;
+                }, 1500); // show test again button - B
+            }, 50); // show after render - A
         }
 
         function testAgain() {
-            console.log('testing again');
             exam.clearEntries();
             tvm.stage = 0;
 
@@ -195,14 +221,30 @@
                 init();
             }, 1000);
         }
+
+        function setExpletive() {
+            var text = expletives[Math.floor(Math.random() * expletives.length)];
+            tvm.expletive = text;
+
+            $timeout(function() {
+                // show expletive - A
+                tvm.showExpletive = true;
+
+                $timeout(function() {
+                    // hide expletive - B
+                    tvm.showExpletive = false;
+                }, 500); // hide expletive - B
+            }, 10); // show expletive - A
+
+        }
     }
 
     /* @ngInject */
     function messageEntryAnimation() {
         var hideClass = 'ng-hide';
         var message = {
-            // beforeAddClass: hideMessage,
-            // removeClass: showMessage
+            beforeAddClass: hideMessage,
+            removeClass: showMessage
         };
 
         return message;
@@ -213,8 +255,6 @@
             if (className !== hideClass) {
                 return;
             }
-
-            console.log('hiding message');
             element.fadeOut(300, done);
         }
 
@@ -222,36 +262,68 @@
             if (className !== hideClass) {
                 return;
             }
-            console.log('showing message');
             element.hide().fadeIn(300, done);
         }
     }
 
     /* @ngInject */
-    // function playAgainAnimation() {
-    //     var hideClass = 'ng-hide';
-    //     var message = {
-    //         beforeAddClass: hideMessage,
-    //         removeClass: showMessage
-    //     };
+    function playAgainButtonAnimation() {
+        var hideClass = 'ng-hide';
+        var message = {
+            beforeAddClass: hideButton,
+            removeClass: showButton
+        };
 
-    //     return message;
+        return message;
 
-    //     ///
+        ///
 
-    //     function hideMessage(element, className, done) {
-    //         if (className !== hideClass) {
-    //             return;
-    //         }
+        function hideButton(element, className, done) {
+            if (className !== hideClass) {
+                return;
+            }
 
-    //         element.fadeOut(300, done);
-    //     }
+            element.removeClass('slideUp').fadeOut(300, done);
+        }
 
-    //     function showMessage(element, className, done) {
-    //         if (className !== hideClass) {
-    //             return;
-    //         }
-    //         element.hide().fadeIn(300, done);
-    //     }
-    // }
+        function showButton(element, className, done) {
+            if (className !== hideClass) {
+                return;
+            }
+            // element.hide().addClass('slideUp').fadeIn(300, done);
+            element.hide().fadeIn(300, done).addClass('slideUp');
+        }
+    }
+
+    /* @ngInject */
+    function expletiveAnimation(exam) {
+        var hideClass = 'ng-hide';
+        var expletive = {
+            beforeAddClass: hideAnExpletive,
+            removeClass: showAnExpletive
+        };
+
+        return expletive;
+
+        ///
+
+        function hideAnExpletive(element, className, done) {
+            if (className !== hideClass) {
+                return;
+            }
+
+            element.removeClass('shakeIt').fadeOut(300, done);
+        }
+
+        function showAnExpletive(element, className, done) {
+            if (className !== hideClass) {
+                return;
+            }
+            var position = exam.getLastEntry().position;
+            element.hide().css({
+                'top': position.y,
+                'left': position.x
+            }).fadeIn(300, done).addClass('shakeIt');
+        }
+    }
 })();
