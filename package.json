@@ -1,6 +1,6 @@
 {
   "name": "drunkard",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "test to see if you are drunk",
   "main": "gulpfile.js",
   "dependencies": {
