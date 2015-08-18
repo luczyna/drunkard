@@ -47,7 +47,6 @@
         //   4 change rule      5 finish and present score
         tvm.stage = 0;
         tvm.ready = false;
-        tvm.count = 10;
         tvm.havePlayed = false;
 
         tvm.canvasInteraction = canvasInteraction;
